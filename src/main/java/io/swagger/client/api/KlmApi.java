@@ -30,6 +30,7 @@ import java.io.IOException;
 import io.swagger.client.model.AirportsResponse;
 import io.swagger.client.model.Fare;
 import io.swagger.client.model.Location;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class KlmApi {
     private ApiClient apiClient;
 
