@@ -1,4 +1,4 @@
-package io.swagger.model;
+package com.klm.cases.df.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package io.swagger.configuration;
+package com.klm.cases.df.configuration;
 
 import org.springframework.core.convert.converter.Converter;
 import org.threeten.bp.LocalDate;

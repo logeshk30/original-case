@@ -1,4 +1,4 @@
-package io.swagger.api;
+package com.klm.cases.df.api;
 
 import javax.xml.bind.annotation.XmlTransient;
 
