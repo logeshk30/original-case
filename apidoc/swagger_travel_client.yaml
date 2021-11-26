@@ -1,0 +1,215 @@
+swagger: "2.0"
+info:
+  description: "Api documentation for simple travel api mock"
+  version: "1.0.0"
+  title: "KLM Travel Client"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:9000"
+basePath: "/api-v1"
+tags:
+- name: "KLM"
+  description: "APIs for KLM travel client"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /airports:
+    get:
+      tags:
+      - "KLM"
+      summary: "List All aiports"
+      description: ""
+      operationId: "getAirports"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "size"
+        in: "query"
+        type: "integer"
+        description: "the size of the result"
+        required: false
+      - name: "page"
+        in: "query"
+        type: "integer"
+        description: "the page to be selected in the paged response"
+        required: false
+      - name: "lang"
+        in: "query"
+        type: "string"
+        description: "the language, supported ones are nl and en"
+        required: false
+      - name: "term"
+        in: "query"
+        type: "string"
+        description: "A search term that searches through code, name and description."
+        required: false
+      responses:
+        "200":
+          description: "Success response - List of all airports"
+          schema:
+            $ref: "#/definitions/AirportsResponse"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal Server Error"
+      security:
+      - basicAuth: []
+      
+  /fares:
+    get:
+      tags:
+      - "KLM"
+      summary: "Get calculated fare"
+      description: ""
+      operationId: "getFare"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "origin_code"
+        in: "query"
+        type: "string"
+        description: "airport code"
+        required: true
+      - name: "destination_code"
+        in: "query"
+        type: "string"
+        description: "airport code"
+        required: true
+      - name: "currency"
+        in: "query"
+        type: "string"
+        description: "the requested resulting currency, supported ones are EUR and USD  (default: EUR)"
+        required: false
+      responses:
+        "200":
+          description: "Success response - Calculated fare for given origin and destination"
+          schema:
+            $ref: "#/definitions/Fare"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal Server Error"
+      security:
+      - basicAuth: []
+  
+  /metrics:
+    get:
+      tags:
+      - "KLM"
+      summary: "Get traffic metrics"
+      description: ""
+      operationId: "getMetrics"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Success response - Get traffic metrics"
+          schema:
+            $ref: "#/definitions/Metrics"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal Server Error"
+      security:
+      - basicAuth: []
+    
+securityDefinitions:
+  basicAuth:
+    type: basic
+    
+definitions:
+  Location:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "Airport code"
+      name:
+        type: "string"
+        description: "Name of the Airport"
+      description:
+        type: "string"
+        description: "description about Airport"
+  AirportsResponse:
+    type: "object"
+    properties:
+      locations:
+        type: "array"
+        items:
+          $ref: "#/definitions/Location"
+      page:
+        $ref: "#/definitions/Page"
+  Fare:
+    type: "object"
+    properties:
+      amount:
+        type: "number"
+        format: "double"
+      currency:
+        type: "string"
+        description: "Currency type - EUR or USD"
+      origin:
+        type: "string"
+        description: "Origin airport code"
+      destination:
+        type: "string"
+        description: "Destination airport code"
+  Page:
+    type: "object"
+    properties:
+      size:
+        type: "integer"
+        format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int32"
+      totalPages:
+        type: "integer"
+        format: "int32"
+      number:
+        type: "integer"
+        format: "int32"
+  Metrics:
+    type: "object"
+    properties:
+      totalRequestsCount:
+        type: "integer"
+        format: "int64"
+      responseOKCount:
+        type: "integer"
+        format: "int64"
+      response4XXCount:
+        type: "integer"
+        format: "int64"
+      response5XXCount:
+        type: "integer"
+        format: "int64"
+      maxResponseTime:
+        type: "integer"
+        format: "int64"
+      minResponseTime:
+        type: "integer"
+        format: "int64"
+      avgResponseTime:
+        type: "integer"
+        format: "int64"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,0 +1,214 @@
+swagger: "2.0"
+info:
+  description: "Api documentation for simple travel api mock"
+  version: "1.0.0"
+  title: "KLM Travel"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/"
+tags:
+- name: "KLM"
+  description: "Everything about KLM"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /airports:
+    get:
+      tags:
+      - "KLM"
+      summary: "List All aiports"
+      description: ""
+      operationId: "getAirports"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "size"
+        in: "query"
+        type: "integer"
+        description: "the size of the result"
+        required: false
+      - name: "page"
+        in: "query"
+        type: "integer"
+        description: "the page to be selected in the paged response"
+        required: false
+      - name: "lang"
+        in: "query"
+        type: "string"
+        description: "the language, supported ones are nl and en"
+        required: false
+      - name: "term"
+        in: "query"
+        type: "string"
+        description: "A search term that searches through code, name and description."
+        required: false
+      responses:
+        "200":
+          description: "Success response - List of all airports"
+          schema:
+            $ref: "#/definitions/AirportsResponse"
+        "401":
+          description: "Unauthorized"
+      security:
+      - basicAuth: []
+      
+  /airports/{code}:
+    get:
+      tags:
+      - "KLM"
+      summary: "Get Airport by code"
+      description: ""
+      operationId: "getAirportsByCode"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "code"
+        in: "path"
+        type: "string"
+        description: "airport code"
+        required: true
+      - name: "lang"
+        in: "query"
+        type: "string"
+        description: "the language, supported ones are nl and en"
+        required: false
+      responses:
+        "200":
+          description: "Success response - Get Airport by code"
+          schema:
+            $ref: "#/definitions/Location"
+        "401":
+          description: "Unauthorized"
+      security:
+      - basicAuth: []
+      
+  /fares/{origin_code}/{destination_code}:
+    get:
+      tags:
+      - "KLM"
+      summary: "Get calculated fare"
+      description: ""
+      operationId: "getFare"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "origin_code"
+        in: "path"
+        type: "string"
+        description: "airport code"
+        required: true
+      - name: "destination_code"
+        in: "path"
+        type: "string"
+        description: "airport code"
+        required: true
+      - name: "currency"
+        in: "query"
+        type: "string"
+        description: "the requested resulting currency, supported ones are EUR and USD"
+        required: false
+      responses:
+        "200":
+          description: "Success response - Calculated fare for given origin and destination"
+          schema:
+            $ref: "#/definitions/Fare"
+        "401":
+          description: "Unauthorized"
+      security:
+      - basicAuth: []
+    
+securityDefinitions:
+  basicAuth:
+    type: basic
+    
+definitions:
+  Location:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "Airport code"
+      name:
+        type: "string"
+        description: "Name of the Airport"
+      description:
+        type: "string"
+        description: "description about Airport"
+      coordinates:
+        $ref: "#/definitions/Coordinates"
+      parent:
+        $ref: "#/definitions/Location"
+  Embedded:
+    type: "object"
+    properties:
+      locations:
+        type: "array"
+        items:
+          $ref: "#/definitions/Location"
+  AirportsResponse:
+    type: "object"
+    properties:
+      _embedded:
+        $ref: "#/definitions/Embedded"
+      page:
+        $ref: "#/definitions/Page"
+  Coordinates:
+    type: "object"
+    properties:
+      latitude:
+        type: "number"
+        format: "double"
+      longitude:
+        type: "number"
+        format: "double"
+  Fare:
+    type: "object"
+    properties:
+      amount:
+        type: "number"
+        format: "double"
+      currency:
+        type: "string"
+        description: "Currency type - EUR or USD"
+      origin:
+        type: "string"
+        description: "Origin airport code"
+      destination:
+        type: "string"
+        description: "Destination airport code"
+  Page:
+    type: "object"
+    properties:
+      size:
+        type: "integer"
+        format: "int32"
+      totalElements:
+        type: "integer"
+        format: "int32"
+      totalPages:
+        type: "integer"
+        format: "int32"
+      number:
+        type: "integer"
+        format: "int32"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
