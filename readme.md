@@ -1,13 +1,15 @@
 Travel API Client
 =================
 
-Here is the link to the repository of Travel API client assignment software
-[Github Repo link](https://github.com/logeshk30/original-case)
+Code repository of Travel API client assignment software. 
+
+I have added the workflow actions (build and test stage) to the project. Whenever there is a push or pull request to 
+master branch then this workflow actions will be triggered automatically. 
 
 I had to do this assignment from my Boeing imaged laptop which has quite a few restrictions on setting up new software 
 applications. I had difficulties in setting up gradle in my dev environment to build and test this application. So I 
 went ahead with maven for resolving the project dependencies. However I have also added the necessary dependency details
-in build.gradle file. So it should work fine thru gradle as well. But I could not validate it in my machine.
+in build.gradle file. So it should work fine thru gradle as well. But I could validate only using maven in my machine.
 
 To start the application using maven
 
