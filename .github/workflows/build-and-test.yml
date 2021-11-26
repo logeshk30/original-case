@@ -21,7 +21,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Maven execute permission for gradlew
+    - name: Maven execute permission for mvnw
       run: chmod +x mvnw
-    - name: Build with Gradle
+    - name: Build the package
       run: mvn package
