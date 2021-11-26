@@ -21,6 +21,14 @@ To view the application (after starting the application) go to:
 
 [http://localhost:9000/index.html](http://localhost:9000/index.html)
 
+To build the jar artifact
+
+`mvn package`
+
+To run the test cases
+
+`mvn test`
+
 
 Fork or otherwise clone this repo into your own personal **private** GitHub repository, and please make sure to add read access for the following GitHub users:
 - Pim-Huisman
