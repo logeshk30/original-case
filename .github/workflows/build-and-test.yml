@@ -40,5 +40,5 @@ jobs:
           distribution: 'adopt'
       - name: Maven execute permission for mvnw
         run: chmod +x mvnw
-      - name: Build the package
+      - name: Run Tests
         run: mvn test
